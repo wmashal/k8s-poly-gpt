@@ -39,28 +39,6 @@ RUN curl -s https://api.github.com/repos/gptscript-ai/gptscript/releases/latest 
     && tar -xzf *.tar.gz -C /usr/local/bin \
     && rm *.tar.gz
 
-# Download Go 1.22.3 (adjust for your platform if needed)
-RUN wget https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
-
-# Extract the archive
-RUN tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
-
-# Build arguments for credentials
-ARG GITHUB_ACCESS_TOKEN
-
-# Clone the repository (replace <YOUR_TOKEN> and <YOUR_USERNAME> with your credentials)
-RUN git clone https://${GITHUB_ACCESS_TOKEN}@github.tools.sap/unified-services/uctl.git
-
-# Add gptscript binary directory to PATH
-ENV PATH="/usr/local/bin:${PATH}"
-ENV PATH="/usr/local/go/bin:${PATH}"
-ENV GOPATH="/go"
-
-# Modified uctl installation (as root)
-USER root
-RUN /bin/bash -c 'cp -r /app/uctl/docs /app/EXTRA_COMMANDS/uctl'
-# Install uctl
-RUN ATOMCONFIG=${ATOMCONFIG}
 
 # TODO (optional): Install additional tools or dependencies
 
