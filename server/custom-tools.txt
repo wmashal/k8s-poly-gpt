@@ -1,0 +1,10 @@
+Name: test-docs
+Description: Get info from test docs
+Args: question: The question to ask docs.
+
+#!/bin/bash
+
+llamaindex-cli rag --files "EXTRA_COMMANDS/**/*.md" && llamaindex-cli rag --question "${question}"
+
+---
+

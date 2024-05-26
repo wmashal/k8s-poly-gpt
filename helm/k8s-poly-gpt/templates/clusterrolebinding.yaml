@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "k8s-poly-gpt.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "k8s-poly-gpt.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole # Or Role for a namespaced role
+  name: {{ include "k8s-poly-gpt.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io
