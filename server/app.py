@@ -18,6 +18,7 @@ def chat():
     config.read('config.properties')
 
     instructions = config['DEFAULT']['prompt.instructions']
+
     user_message = instructions+" USER: "+request.json["message"]
     backup_file_path = "/tmp/script_bak.gpt"
     custom_tools_file_path = "/tmp/custom-tools.txt"
