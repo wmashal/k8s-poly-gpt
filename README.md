@@ -1,6 +1,12 @@
 # K8s Poly GPT
 
-## Description
+## Description**
+
+Introducing **K8s Poly GPT** your AI-powered Kubernetes copilot. Ask questions in plain language, and our GPT agent leverages NLP to understand and execute tasks within your cluster.  Harness the power of built-in tools, add your own custom tools, or even upload documentation for instant reference.  Tired of remembering complex commands?  Teach poly gpt your favorite shortcuts and streamline your Kubernetes workflow.
+
+
+
+# Installation
 
 ## Run docker locally
 - docker-compose up --build
@@ -9,7 +15,7 @@
 - helm install k8s-poly-gpt --namespace k8s-poly-gpt --create-namespace .
 - helm uninstall k8s-poly-gpt --namespace k8s-poly-gpt
 
-## Some samples to test k8s
+## Samples
 
 - use kubectl to get the pods in the all namespaces if there is a pod name contains the word 'poly' get its container image name and version?
 - use kubectl to check if all pods in a Running state? if no who is the pod is not in the Running state ?
