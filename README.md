@@ -1,11 +1,15 @@
-# Run docker locally
-docker-compose up --build
+# K8s Poly GPT
 
-# helm chart
-helm install k8s-poly-gpt --namespace k8s-poly-gpt --create-namespace .
-helm uninstall k8s-poly-gpt --namespace k8s-poly-gpt
+## Description
 
-# Some samples to test k8s
+## Run docker locally
+- docker-compose up --build
+
+## helm chart
+- helm install k8s-poly-gpt --namespace k8s-poly-gpt --create-namespace .
+- helm uninstall k8s-poly-gpt --namespace k8s-poly-gpt
+
+## Some samples to test k8s
 
 - use kubectl to get the pods in the all namespaces if there is a pod name contains the word 'poly' get its container image name and version?
 - use kubectl to check if all pods in a Running state? if no who is the pod is not in the Running state ?
