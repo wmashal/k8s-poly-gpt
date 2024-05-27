@@ -1,0 +1,119 @@
+/* General Styles */
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #f4f5f7;
+}
+
+#chat-container {
+    width: 700px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative; /* Needed for absolute positioning of progress bar */
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #1890ff;
+    color: white;
+    margin: 0;
+}
+
+/* Chat Log Styling */
+#chat-log {
+    height: 400px;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.user-message,
+.bot-message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    max-width: 80%;
+    clear: both;
+}
+
+.user-message {
+    background-color: #e8f5e9;
+    color: #388e3c;
+    float: right;
+}
+
+.bot-message {
+    background-color: #f5f5f5;
+    color: #424242;
+    float: left;
+}
+
+/* Input Area Styling */
+#chat-form {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: stretch; /* Stretch items to fill the container height */
+}
+
+#message {
+    flex-grow: 1;
+    padding: 15px; /* Increase padding for a larger input area */
+    border: 1px solid #ddd;
+    border-radius: 8px 0 0 8px; /* Rounded corners on the left side only */
+    resize: vertical;
+    font-size: 16px; /* Larger font size for better readability */
+    line-height: 1.5;
+    margin-right: 10px; /* Add spacing between input and button */
+}
+
+#chat-form button {
+    padding: 15px 20px; /* Adjust padding to match the input area */
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0; /* Rounded corners on the right side only */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px; /* Match font size with the input area */
+}
+
+#chat-form button:hover {
+    background-color: #0277bd;
+}
+
+/* Progress Bar Styling and Centering */
+#progress-bar {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the progress bar */
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+pre {
+    background-color: #f0f0f0;  /* Light background for code */
+    overflow-x: auto;            /* Enable horizontal scrolling if needed */
+    white-space: pre-wrap;       /* Preserve line breaks and spaces */
+    padding: 10px;
+    border-radius: 5px;
+}

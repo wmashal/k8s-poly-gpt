@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 import subprocess
 import shutil
 import threading
 import os
 import configparser
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 HOSTNAME = os.environ.get('HOSTNAME', '127.0.0.1')
 PORT = 5000
@@ -13,12 +13,16 @@ PORT = 5000
 @app.route("/chat", methods=["POST"])
 def chat():
     print("Received JSON:", request.json)
-    user_message = request.json["message"]
+
+    config = configparser.ConfigParser()
+    config.read('config.properties')
+
+    instructions = config['DEFAULT']['gptscript.instructions']
+    user_message = instructions+" USER: "+request.json["message"]
     backup_file_path = "/tmp/script_bak.gpt"
     custom_tools_file_path = "/tmp/custom-tools.txt"
 
-
-# Clone script.gpt to script_bak.gpt in /tmp
+    # Clone script.gpt to script_bak.gpt in /tmp
     shutil.copyfile("/app/script.gpt", backup_file_path)
     shutil.copyfile("/app/custom-tools.txt", custom_tools_file_path)
 
@@ -26,8 +30,6 @@ def chat():
     with open(backup_file_path, "r") as f:
         template = f.read()
 
-    config = configparser.ConfigParser()
-    config.read('config.properties')
 
     tools = config['DEFAULT']['gptscript.tools']
     model = config['DEFAULT']['gptscript.model']
@@ -36,7 +38,7 @@ def chat():
     with open(custom_tools_file_path, "r") as f:
         custom_tools_file_path_content = f.read()
 
-    updated_script = template.replace("<EXTRA-TOOLS>", tools).replace("<MESSAGE>", user_message)\
+    updated_script = template.replace("<EXTRA-TOOLS>", tools).replace("<MESSAGE>", user_message) \
         .replace("<CUSTOM-TOOLS>", custom_tools_file_path_content).replace("<MODEL-NAME>", model)
     with open(backup_file_path, "w") as f:
         f.write(updated_script)
@@ -73,77 +75,16 @@ def readyz():
 
 
 def generate_html(message_content=None, response_content=None):
-    html = f"""
-    <html>
-    <head>
-        <style>
-            #progress-bar {{
-                width: 50px;
-                height: 50px;
-                border: 5px solid #f3f3f3;
-                border-top: 5px solid #3498db;
-                border-radius: 50%;
-                animation: spin 2s linear infinite;
-                display: none; /* Hide initially */
-            }}
-
-            @keyframes spin {{
-                0% {{ transform: rotate(0deg); }}
-                100% {{ transform: rotate(360deg); }}
-            }}
-        </style>
-    </head>
-    <body>
-        <h1>Chat with K8s Poly GPT</h1>
-        <form id="chat-form">
-            <label for="message">Enter your message:</label><br>
-            <textarea id="message" name="message" rows="5" cols="50">{message_content or ''}</textarea><br><br>
-            <button type="submit">Send</button>
-        </form>
-        <div id="progress-bar"></div> <div id="response">{response_content or ''}</div>
-        <script>
-            const form = document.getElementById('chat-form');
-            const progressBar = document.getElementById('progress-bar');
-
-            form.addEventListener('submit', (event) => {{
-                event.preventDefault();
-                const messageInput = document.getElementById('message');
-                const responseDiv = document.getElementById('response');
-                const message = messageInput.value;
-
-                // Show progress bar when submitting
-                progressBar.style.display = 'block';
-
-                fetch('/chat', {{
-                    method: 'POST',
-                    headers: {{
-                        'Content-Type': 'application/json'
-                    }},
-                    body: JSON.stringify({{message: message}})
-                }})
-                .then(response => response.json())
-                .then(data => {{
-                    responseDiv.textContent = data.response;
-                    messageInput.value = '';
-                    // Hide progress bar after receiving response
-                    progressBar.style.display = 'none';
-                }})
-                .catch(error => {{
-                    responseDiv.textContent = 'Error: ' + error;
-                    progressBar.style.display = 'none';
-                }});
-            }});
-        </script>
-    </body>
-    </html>
-    """
-    return html
+    return render_template(
+        "index.html",
+        message_content=message_content,
+        response_content=response_content
+    )
 
 # --- Flask Routes ---
-@app.route("/ui", methods=["GET"])
+@app.route("/", methods=["GET"])
 def index():
-    print("Request received")
-    return render_template_string(generate_html())
+    return generate_html()
 
 # --- Threading and Main Execution ---
 
