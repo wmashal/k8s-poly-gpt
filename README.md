@@ -1,6 +1,6 @@
 # K8s Poly GPT
 
-## Description**
+## Description
 
 Introducing **K8s Poly GPT** your AI-powered Kubernetes copilot. Ask questions in plain language, and our GPT agent leverages NLP to understand and execute tasks within your cluster.  Harness the power of built-in tools, add your own custom tools, or even upload documentation for instant reference.  Tired of remembering complex commands?  Teach poly gpt your favorite shortcuts and streamline your Kubernetes workflow.
 
