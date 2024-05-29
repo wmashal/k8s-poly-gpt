@@ -19,7 +19,7 @@ def chat():
 
     instructions = config['DEFAULT']['prompt.instructions']
 
-    user_message = instructions+" USER: "+request.json["message"]
+    user_message = request.json["message"]
     backup_file_path = "/tmp/script_bak.gpt"
     custom_tools_file_path = "/tmp/custom-tools.txt"
 
@@ -39,7 +39,7 @@ def chat():
     with open(custom_tools_file_path, "r") as f:
         custom_tools_file_path_content = f.read()
 
-    updated_script = template.replace("<EXTRA-TOOLS>", tools).replace("<MESSAGE>", user_message) \
+    updated_script = template.replace("<EXTRA-TOOLS>", tools).replace("<INSTRUCTIONS>", instructions).replace("<MESSAGE>", user_message) \
         .replace("<CUSTOM-TOOLS>", custom_tools_file_path_content).replace("<MODEL-NAME>", model)
     with open(backup_file_path, "w") as f:
         f.write(updated_script)
