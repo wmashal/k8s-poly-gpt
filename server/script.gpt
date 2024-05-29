@@ -1,6 +1,8 @@
 tools: sys.read, sys.write, sys.exec?, <EXTRA-TOOLS>
 Model Name: <MODEL-NAME>
 
+<INSTRUCTIONS>
+
 <MESSAGE>
 
 ---
