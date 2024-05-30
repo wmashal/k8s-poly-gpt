@@ -7,12 +7,15 @@ namespace: k8s-poly-gpt
 
 secret:
   openai:
-    api_key: ""
+    apiKey: ""
+  mistralAi:
+    apiKey: ""
+    
 image:
   repository: wmashal/k8s-poly-gpt-server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0"
+  tag: "v1.0.0"
 
 imagePullSecrets: []
 nameOverride: ""
