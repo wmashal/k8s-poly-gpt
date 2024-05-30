@@ -33,6 +33,17 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: k8s-poly-gpt
+                  key: OPENAI_API_KEY
+            - name: GPTSCRIPT_PROVIDER_API_MISTRAL_AI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: k8s-poly-gpt
+                  key: GPTSCRIPT_PROVIDER_API_MISTRAL_AI_API_KEY
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http-server
