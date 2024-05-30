@@ -3,6 +3,7 @@ FROM --platform=linux/amd64 python:3.11-slim AS builder
 
 # Environment variables
 ENV OPENAI_API_KEY=""
+ENV GPTSCRIPT_PROVIDER_API_MISTRAL_AI_API_KEY=""
 ENV ATOMCONFIG=""
 ENV GOPRIVATE=""
 ENV GIT_TERMINAL_PROMPT=1
