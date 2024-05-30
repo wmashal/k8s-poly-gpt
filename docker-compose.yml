@@ -1,11 +1,8 @@
 version: '3.8'
 services:
-#  frontend:
-#    build: ./frontend
-#    ports:
-#      - "3000:3000"
   server:
     environment:
+      - GPTSCRIPT_PROVIDER_API_MISTRAL_AI_API_KEY=${GPTSCRIPT_PROVIDER_API_MISTRAL_AI_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     build:
       context: ./server
@@ -13,5 +10,3 @@ services:
       - "5000:5000"
     volumes:
       - ./server/script.gpt:/app/script.gpt
-#    depends_on:
-#      - frontend
